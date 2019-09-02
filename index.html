@@ -12,7 +12,15 @@
 </body>
 <script>
   function back() {
-    alert("back");
+    if (WebViewBridge) {
+      WebViewBridge.onMessage = function (message) {
+        if (message === "hello from react-native") {
+          WebViewBridge.send("got the message inside webview");
+        }
+      };
+
+      WebViewBridge.send("hello from webview");
+    }
   }
 </script>
 </html>
