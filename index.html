@@ -15,9 +15,10 @@
 </body>
 <script>
   document.ready(() => {
+    document.getElementById('message').innerHTML = `Message: Empty`;
     if(window.WebViewBridge) {
       WebViewBridge.onMessage = function (dataString) {
-        document.getElementById('message').text = `Message: ${dataString}`;
+        document.getElementById('message').innerHTML = `Message: ${dataString}`;
         const data= JSON.parse(dataString);
         console.log('TCL: WebViewBridge.onMessage -> data', data)
         switch(data.message) {
