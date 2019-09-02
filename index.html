@@ -12,6 +12,13 @@
   <button onclick="openAlbum()">open Album</button>
 </body>
 <script>
+  if(window.WebViewBridge) {
+    WebViewBridge.onMessage = function (message) {
+    console.log('TCL: WebViewBridge.onMessage -> message', message)
+      
+    };
+  }
+  
   function goBack() {
     const {WebViewBridge} = window;
     if (WebViewBridge) {
