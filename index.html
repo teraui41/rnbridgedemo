@@ -10,12 +10,23 @@
   <h1>react native webview bridge demo</h1>
   <button onclick="goBack()">back</button>
   <button onclick="openAlbum()">open Album</button>
+
+  <h1 id='message'>Message: none</h1>
 </body>
 <script>
   document.ready(() => {
     if(window.WebViewBridge) {
-      WebViewBridge.onMessage = function (message) {
-      alert(message);
+      WebViewBridge.onMessage = function (dataString) {
+        document.getElementById('message').text = `Message: ${dataString}`;
+        const data= JSON.parse(dataString);
+        console.log('TCL: WebViewBridge.onMessage -> data', data)
+        switch(data.message) {
+          case 'getImage':
+            const base64Image = data.base64Image;
+            return null;
+          default:
+            return null;
+        }
         
       };
     }
