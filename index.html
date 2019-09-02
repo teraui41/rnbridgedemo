@@ -8,18 +8,21 @@
 </head>
 <body>
   <h1>react native webview bridge demo</h1>
-  <button onclick="back()">back</button>
+  <button onclick="goBack()">back</button>
+  <button onclick="openAlbum()">open Album</button>
 </body>
 <script>
-  function back() {
+  function goBack() {
+    const {WebViewBridge} = window;
     if (WebViewBridge) {
-      WebViewBridge.onMessage = function (message) {
-        if (message === "hello from react-native") {
-          WebViewBridge.send("got the message inside webview");
-        }
-      };
+      WebViewBridge.send("goBack");
+    }
+  }
 
-      WebViewBridge.send("hello from webview");
+  function openAlbum() {
+    const {WebViewBridge} = window;
+    if (WebViewBridge) {
+      WebViewBridge.send("openAlbum");
     }
   }
 </script>
