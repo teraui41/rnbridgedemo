@@ -12,12 +12,14 @@
   <button onclick="openAlbum()">open Album</button>
 </body>
 <script>
-  if(window.WebViewBridge) {
-    WebViewBridge.onMessage = function (message) {
-    alert(message);
-      
-    };
-  }
+  document.ready(() => {
+    if(window.WebViewBridge) {
+      WebViewBridge.onMessage = function (message) {
+      alert(message);
+        
+      };
+    }
+  })
   
   function goBack() {
     const {WebViewBridge} = window;
