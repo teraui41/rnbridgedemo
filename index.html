@@ -9,38 +9,54 @@
 <body>
   <h1>react native webview bridge demo</h1>
   <button onclick="goBack()">back</button>
-  <button onclick="openAlbum()">open Album</button>
-
+  <button onclick="saveToAlbum()">save To Album</button>
+  <button onclick="openWechat()">open Wechat</button>
+  <button onclick="openAliPay()">open AliPay</button>
+  <button onclick="openToolPack()">openToolPack</button>
+  <button onclick="openAlbum()">openAlbum</button>
   <h1 id='message'>Message: none1</h1>
 </body>
 <script>
     document.getElementById('message').innerHTML = `Message: Empty`;
-    if(window.WebViewBridge) {
-      WebViewBridge.onMessage = function (dataString) {
-        document.getElementById('message').innerHTML = `Message: ${dataString}`;
-        const data= JSON.parse(dataString);
-        switch(data.message) {
-          case 'base64ImageResult':
-            alert(data.base64Image);
-            const base64Image = data.base64Image;
-            return null;
-          default:
-            return null;
-        }
-        
-      };
-    }
   function goBack() {
-    const {WebViewBridge} = window;
-    if (WebViewBridge) {
-      WebViewBridge.send("goBack");
+    const {postMessage} = window;
+    if (postMessage) {
+      postMessage(JSON.stringify({action: "disconnect"}));
     }
   }
 
   function openAlbum() {
-    const {WebViewBridge} = window;
-    if (WebViewBridge) {
-      WebViewBridge.send("openAlbum");
+    const {postMessage} = window;
+    if (postMessage) {
+      postMessage(JSON.stringify({action: "openAlbum"}));
+    }
+  }
+
+  function saveToAlbum() {
+    const {postMessage} = window;
+    if (postMessage) {
+      postMessage(JSON.stringify({action: "saveToAlbum", qrcode: "abc123"}));
+    }
+  }
+
+  function openWechat() {
+    const {postMessage} = window;
+    if (postMessage) {
+      postMessage(JSON.stringify({action: "openWechat", url: "http://google.com.tw"}));
+    }
+  }
+
+  function openAliPay() {
+    const {postMessage} = window;
+    if (postMessage) {
+      postMessage(JSON.stringify({action: "openAliPay", url: "http://yahoo.com.tw"}));
+    }
+  }
+
+  function openToolPack() {
+    const {postMessage} = window;
+    if (postMessage) {
+      postMessage(JSON.stringify({action: "openToolPack", url: "http://hotmail.com.tw"}));
     }
   }
 </script>
