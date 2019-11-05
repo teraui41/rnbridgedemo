@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-    <script type="text/javascript">
-      console.log("123", "----------------------------");
-      </script>
   </head>
 
   <body>
     <h1>react native webview bridge demo</h1>
+    <form onsubmit="submit(event)">
+        <input id="fileBtn" type="file" onchange="upload(event);" accept="image/*" />
+        <img src="" id="img"/>
+    </form>
+    
+    <p>upload file name: <span id="fileName"></span></p>
+
     <button onclick="goBack()">back</button>
     <button onclick="saveToAlbum()">save To Album</button>
     <button onclick="openWechat()">open Wechat</button>
@@ -45,6 +49,17 @@
 
     document.getElementById('message').innerHTML = `Message: Empty`
 
+    function submit(event) {
+      event.preventDefault();
+    }
+    function upload(event) {
+      var input = document.getElementById("fileBtn");
+      var file = input.value.split("\\");
+      var fileName = file[file.length-1];
+      const textField = document.getElementById("fileName");
+      textField.innerHTML = fileName;
+      window.postMessage(JSON.stringify({action: "error", fileName}));
+    }
     function goBack() {
       const { postMessage } = window
       if (postMessage) {
