@@ -21,12 +21,12 @@
 
     <p>upload file name: <span id="fileName"></span></p>
 
-    <button id="goBack" onclick="goBack()">back</button>
-    <button onclick="saveToAlbum()">save To Album</button>
-    <button onclick="openWechat()">open Wechat</button>
-    <button onclick="openAliPay()">open AliPay</button>
-    <button onclick="openToolPack()">openToolPack</button>
-    <button onclick="openAlbum()">openAlbum</button>
+    <button id="goBack">back1111111</button>
+    <button id="saveToAlbum">save To Album</button>
+    <button id="openWechat">open Wechat</button>
+    <button id="openAliPay">open AliPay</button>
+    <button id="openToolPack">openToolPack</button>
+    <button id="openAlbum">openAlbum</button>
     <h1 id="message">Message: none1</h1>
     <img
       id="demoImage"
@@ -34,93 +34,57 @@
     />
   </body>
   <script type="text/javascript">
-    const img = document.getElementById('demoImage')
-    // app 发送event 给前端接收的范例
-    document.addEventListener('message', function(event) {
-      const data = JSON.parse(event.data)
-      try {
-        switch (data.action) {
-          //打开相簿 选取相片后会将图片转为 base64 发送到前端 example: { action: "getImageBase64", base64: "data:image/jpeg;base64,......"}
-          case 'getImageBase64':
-            const { base64 } = data
-            img.src = base64
-          default:
-            alert('action not defined')
-        }
-      } catch (error) {
-        window.ReactNativeWebView.postMessage(
-          JSON.stringify({ action: 'error', message: error.message }),
-          '*'
-        )
-      }
-    })
-
-    document.getElementById('message').innerHTML = `Message: Empty`
-
-    function submit(event) {
-      event.preventDefault()
-    }
-    function upload(event) {
-      var input = document.getElementById('fileBtn')
-      var file = input.value.split('\\')
-      var fileName = file[file.length - 1]
-      const textField = document.getElementById('fileName')
-      textField.innerHTML = fileName
-      window.ReactNativeWebView.postMessage(
-        JSON.stringify({ action: 'error', fileName })
-      )
-    }
-
-    function goBack() {
+    document.getElementById("goBack").addEventListener("click", function(){
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           action: 'disconnect',
         })
       )
-    }
+    });
 
-    function openAlbum() {
-      window.ReactNativeWebView.postMessage(
-        JSON.stringify({
-          action: 'openAlbum',
-        })
-      )
-    }
-
-    function saveToAlbum() {
+    document.getElementById("saveToAlbum").addEventListener("click", function(){
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           action: 'saveToAlbum',
           qrcode: 'abc123',
         })
       )
-    }
+    });
 
-    function openWechat() {
+    document.getElementById("openAlbum").addEventListener("click", function(){
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          action: 'saveToAlbum',
+          qrcode: 'abc123',
+        })
+      )
+    });
+
+    document.getElementById("openWechat").addEventListener("click", function(){
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           action: 'openWechat',
           url: 'http://google.com.tw',
         })
       )
-    }
+    });
 
-    function openAliPay() {
+    document.getElementById("openAliPay").addEventListener("click", function(){
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           action: 'openAliPay',
           url: 'http://yahoo.com.tw',
         })
       )
-    }
+    });
 
-    function openToolPack() {
+    document.getElementById("openToolPack").addEventListener("click", function(){
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
           action: 'openToolPack',
           url: 'http://hotmail.com.tw',
         })
       )
-    }
+    });
   </script>
 </html>
