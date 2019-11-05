@@ -1,63 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
-  <h1>react native webview bridge demo</h1>
-  <button onclick="goBack()">back</button>
-  <button onclick="saveToAlbum()">save To Album</button>
-  <button onclick="openWechat()">open Wechat</button>
-  <button onclick="openAliPay()">open AliPay</button>
-  <button onclick="openToolPack()">openToolPack</button>
-  <button onclick="openAlbum()">openAlbum</button>
-  <h1 id='message'>Message: none1</h1>
-</body>
-<script>
-    document.getElementById('message').innerHTML = `Message: Empty`;
-  function goBack() {
-    const {postMessage} = window;
-    if (postMessage) {
-      postMessage(JSON.stringify({action: "disconnect"}));
-    }
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
 
-  function openAlbum() {
-    const {postMessage} = window;
-    if (postMessage) {
-      postMessage(JSON.stringify({action: "openAlbum"}));
-    }
-  }
+  <body>
+    <h1>react native webview bridge demo</h1>
+    <button onclick="goBack()">back</button>
+    <button onclick="saveToAlbum()">save To Album</button>
+    <button onclick="openWechat()">open Wechat</button>
+    <button onclick="openAliPay()">open AliPay</button>
+    <button onclick="openToolPack()">openToolPack</button>
+    <button onclick="openAlbum()">openAlbum</button>
+    <h1 id="message">Message: none1</h1>
+    <img
+      id="demoImage"
+      src="https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=2ahUKEwjGqriniNLlAhXBy4sBHSn4BckQjRx6BAgBEAQ&url=http%3A%2F%2Ftorkcontabil.com.br%2Ftorkadvocacia%2Flogo-default%2F&psig=AOvVaw3KsPjrX1a9WkDyJgaDiTJi&ust=1573008729022484"
+    />
+  </body>
+  <script>
+    // app 发送event 给前端接收的范例
+    document.addEventListener('message', function(event) {
+      const jsonString = event.data
+      const data = JSON.parse(jsonString)
+      switch (data.action) {
+        //打开相簿 选取相片后会将图片转为 base64 发送到前端 example: { action: "getImageBase64", base64: "data:image/jpeg;base64,......"}
+        case 'getImageBase64':
+          const { base64 } = data
+          const img = document.getElementById('demoImage')
+          img.src = base64
+        default:
+          alert('action not defined')
+      }
+    })
 
-  function saveToAlbum() {
-    const {postMessage} = window;
-    if (postMessage) {
-      postMessage(JSON.stringify({action: "saveToAlbum", qrcode: "abc123"}));
-    }
-  }
+    document.getElementById('message').innerHTML = `Message: Empty`
 
-  function openWechat() {
-    const {postMessage} = window;
-    if (postMessage) {
-      postMessage(JSON.stringify({action: "openWechat", url: "http://google.com.tw"}));
+    function goBack() {
+      const { postMessage } = window
+      if (postMessage) {
+        postMessage(
+          JSON.stringify({
+            action: 'disconnect',
+          })
+        )
+      }
     }
-  }
 
-  function openAliPay() {
-    const {postMessage} = window;
-    if (postMessage) {
-      postMessage(JSON.stringify({action: "openAliPay", url: "http://yahoo.com.tw"}));
+    function openAlbum() {
+      const { postMessage } = window
+      if (postMessage) {
+        postMessage(
+          JSON.stringify({
+            action: 'openAlbum',
+          })
+        )
+      }
     }
-  }
 
-  function openToolPack() {
-    const {postMessage} = window;
-    if (postMessage) {
-      postMessage(JSON.stringify({action: "openToolPack", url: "http://hotmail.com.tw"}));
+    function saveToAlbum() {
+      const { postMessage } = window
+      if (postMessage) {
+        postMessage(
+          JSON.stringify({
+            action: 'saveToAlbum',
+            qrcode: 'abc123',
+          })
+        )
+      }
     }
-  }
-</script>
+
+    function openWechat() {
+      const { postMessage } = window
+      if (postMessage) {
+        postMessage(
+          JSON.stringify({
+            action: 'openWechat',
+            url: 'http://google.com.tw',
+          })
+        )
+      }
+    }
+
+    function openAliPay() {
+      const { postMessage } = window
+      if (postMessage) {
+        postMessage(
+          JSON.stringify({
+            action: 'openAliPay',
+            url: 'http://yahoo.com.tw',
+          })
+        )
+      }
+    }
+
+    function openToolPack() {
+      const { postMessage } = window
+      if (postMessage) {
+        postMessage(
+          JSON.stringify({
+            action: 'openToolPack',
+            url: 'http://hotmail.com.tw',
+          })
+        )
+      }
+    }
+  </script>
 </html>
