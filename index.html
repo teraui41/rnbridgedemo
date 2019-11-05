@@ -34,6 +34,9 @@
     />
   </body>
   <script type="text/javascript">
+   setTimeout(function () {
+            window.ReactNativeWebView.postMessage(JSON.stringify({action: "error"}))
+          }, 2000)
     ;(function() {
       const img = document.getElementById('demoImage')
       // app 发送event 给前端接收的范例
