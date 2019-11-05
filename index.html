@@ -10,13 +10,18 @@
   <body>
     <h1>react native webview bridge demo</h1>
     <form onsubmit="submit(event)">
-        <input id="fileBtn" type="file" onchange="upload(event);" accept="image/*" />
-        <img src="" id="img"/>
+      <input
+        id="fileBtn"
+        type="file"
+        onchange="upload(event);"
+        accept="image/*"
+      />
+      <img src="" id="img" />
     </form>
-    
+
     <p>upload file name: <span id="fileName"></span></p>
 
-    <button onclick="goBack()">back</button>
+    <button id="goBack" onclick="goBack()">back</button>
     <button onclick="saveToAlbum()">save To Album</button>
     <button onclick="openWechat()">open Wechat</button>
     <button onclick="openAliPay()">open AliPay</button>
@@ -29,105 +34,112 @@
     />
   </body>
   <script type="text/javascript">
-    const img = document.getElementById('demoImage')
-    // app 发送event 给前端接收的范例
-    document.addEventListener('message', function(event) {
-      const data = JSON.parse(event.data);
-      try {
-      switch (data.action) {
-        //打开相簿 选取相片后会将图片转为 base64 发送到前端 example: { action: "getImageBase64", base64: "data:image/jpeg;base64,......"}
-        case 'getImageBase64':
-          const { base64 } = data
-          img.src = base64
-        default:
-          alert('action not defined')
-      }
-      } catch(error) {
-        window.postMessage(JSON.stringify({action: "error", message: error.message}), '*')
-      }
-    })
+    ;(function() {
+      const img = document.getElementById('demoImage')
+      // app 发送event 给前端接收的范例
+      document.addEventListener('message', function(event) {
+        const data = JSON.parse(event.data)
+        try {
+          switch (data.action) {
+            //打开相簿 选取相片后会将图片转为 base64 发送到前端 example: { action: "getImageBase64", base64: "data:image/jpeg;base64,......"}
+            case 'getImageBase64':
+              const { base64 } = data
+              img.src = base64
+            default:
+              alert('action not defined')
+          }
+        } catch (error) {
+          window.postMessage(
+            JSON.stringify({ action: 'error', message: error.message }),
+            '*'
+          )
+        }
+      })
 
-    document.getElementById('message').innerHTML = `Message: Empty`
+      document.getElementById('message').innerHTML = `Message: Empty`
 
-    function submit(event) {
-      event.preventDefault();
-    }
-    function upload(event) {
-      var input = document.getElementById("fileBtn");
-      var file = input.value.split("\\");
-      var fileName = file[file.length-1];
-      const textField = document.getElementById("fileName");
-      textField.innerHTML = fileName;
-      window.postMessage(JSON.stringify({action: "error", fileName}));
-    }
-    function goBack() {
-      const { postMessage } = window
-      if (postMessage) {
-        postMessage(
-          JSON.stringify({
-            action: 'disconnect',
-          })
-        )
+      function submit(event) {
+        event.preventDefault()
       }
-    }
+      function upload(event) {
+        var input = document.getElementById('fileBtn')
+        var file = input.value.split('\\')
+        var fileName = file[file.length - 1]
+        const textField = document.getElementById('fileName')
+        textField.innerHTML = fileName
+        window.postMessage(JSON.stringify({ action: 'error', fileName }))
+      }
 
-    function openAlbum() {
-      const { postMessage } = window
-      if (postMessage) {
-        postMessage(
-          JSON.stringify({
-            action: 'openAlbum',
-          })
-        )
-      }
-    }
+      // function goBack() {
+      //   const { postMessage } = window.ReactNativeWebView
+      //   if (postMessage) {
+      //     postMessage(
+      //       JSON.stringify({
+      //         action: 'disconnect',
+      //       })
+      //     )
+      //   }
+      // }
 
-    function saveToAlbum() {
-      const { postMessage } = window
-      if (postMessage) {
-        postMessage(
-          JSON.stringify({
-            action: 'saveToAlbum',
-            qrcode: 'abc123',
-          })
-        )
-      }
-    }
+      // function openAlbum() {
+      //   const { postMessage } = window.ReactNativeWebView
+      //   alert(typeof postMessage)
+      //   if (postMessage) {
+      //     postMessage(
+      //       JSON.stringify({
+      //         action: 'openAlbum',
+      //       })
+      //     )
+      //   }
+      // }
 
-    function openWechat() {
-      const { postMessage } = window
-      if (postMessage) {
-        postMessage(
-          JSON.stringify({
-            action: 'openWechat',
-            url: 'http://google.com.tw',
-          })
-        )
-      }
-    }
+      // function saveToAlbum() {
+      //   const { postMessage } = window.ReactNativeWebView
+      //   if (postMessage) {
+      //     postMessage(
+      //       JSON.stringify({
+      //         action: 'saveToAlbum',
+      //         qrcode: 'abc123',
+      //       })
+      //     )
+      //   }
+      // }
 
-    function openAliPay() {
-      const { postMessage } = window
-      if (postMessage) {
-        postMessage(
-          JSON.stringify({
-            action: 'openAliPay',
-            url: 'http://yahoo.com.tw',
-          })
-        )
-      }
-    }
+      // function openWechat() {
+      //   const { postMessage } = window.ReactNativeWebView
+      //   if (postMessage) {
+      //     postMessage(
+      //       JSON.stringify({
+      //         action: 'openWechat',
+      //         url: 'http://google.com.tw',
+      //       })
+      //     )
+      //   }
+      // }
 
-    function openToolPack() {
-      const { postMessage } = window
-      if (postMessage) {
-        postMessage(
-          JSON.stringify({
-            action: 'openToolPack',
-            url: 'http://hotmail.com.tw',
-          })
-        )
-      }
-    }
+      // function openAliPay() {
+      //   const { postMessage } = window.ReactNativeWebView
+      //   if (postMessage) {
+      //     postMessage(
+      //       JSON.stringify({
+      //         action: 'openAliPay',
+      //         url: 'http://yahoo.com.tw',
+      //       })
+      //     )
+      //   }
+      // }
+
+      // function openToolPack() {
+      //   const { postMessage } = window.ReactNativeWebView
+      //   if (postMessage) {
+      //     postMessage(
+      //       JSON.stringify({
+      //         action: 'openToolPack',
+      //         url: 'http://hotmail.com.tw',
+      //       })
+      //     )
+      //   }
+      // }
+    })()
   </script>
 </html>
