@@ -34,10 +34,10 @@
     />
   </body>
   <script type="text/javascript">
-   setTimeout(function () {
-     alert("hi");
-            window.ReactNativeWebView.postMessage(JSON.stringify({action: "error"}))
-          }, 2000)
+    setTimeout(function() {
+      alert('hi')
+      window.ReactNativeWebView.postMessage(JSON.stringify({ action: 'error' }))
+    }, 2000)
     ;(function() {
       const img = document.getElementById('demoImage')
       // app 发送event 给前端接收的范例
@@ -53,7 +53,7 @@
               alert('action not defined')
           }
         } catch (error) {
-          window.postMessage(
+          window.ReactNativeWebView.postMessage(
             JSON.stringify({ action: 'error', message: error.message }),
             '*'
           )
@@ -71,79 +71,62 @@
         var fileName = file[file.length - 1]
         const textField = document.getElementById('fileName')
         textField.innerHTML = fileName
-        window.postMessage(JSON.stringify({ action: 'error', fileName }))
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({ action: 'error', fileName })
+        )
       }
 
-      // function goBack() {
-      //   const { postMessage } = window.ReactNativeWebView
-      //   if (postMessage) {
-      //     postMessage(
-      //       JSON.stringify({
-      //         action: 'disconnect',
-      //       })
-      //     )
-      //   }
-      // }
+      function goBack() {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            action: 'disconnect',
+          })
+        )
+      }
 
-      // function openAlbum() {
-      //   const { postMessage } = window.ReactNativeWebView
-      //   alert(typeof postMessage)
-      //   if (postMessage) {
-      //     postMessage(
-      //       JSON.stringify({
-      //         action: 'openAlbum',
-      //       })
-      //     )
-      //   }
-      // }
+      function openAlbum() {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            action: 'openAlbum',
+          })
+        )
+      }
 
-      // function saveToAlbum() {
-      //   const { postMessage } = window.ReactNativeWebView
-      //   if (postMessage) {
-      //     postMessage(
-      //       JSON.stringify({
-      //         action: 'saveToAlbum',
-      //         qrcode: 'abc123',
-      //       })
-      //     )
-      //   }
-      // }
+      function saveToAlbum() {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            action: 'saveToAlbum',
+            qrcode: 'abc123',
+          })
+        )
+      }
 
-      // function openWechat() {
-      //   const { postMessage } = window.ReactNativeWebView
-      //   if (postMessage) {
-      //     postMessage(
-      //       JSON.stringify({
-      //         action: 'openWechat',
-      //         url: 'http://google.com.tw',
-      //       })
-      //     )
-      //   }
-      // }
+      function openWechat() {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            action: 'openWechat',
+            url: 'http://google.com.tw',
+          })
+        )
+      }
 
-      // function openAliPay() {
-      //   const { postMessage } = window.ReactNativeWebView
-      //   if (postMessage) {
-      //     postMessage(
-      //       JSON.stringify({
-      //         action: 'openAliPay',
-      //         url: 'http://yahoo.com.tw',
-      //       })
-      //     )
-      //   }
-      // }
+      function openAliPay() {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            action: 'openAliPay',
+            url: 'http://yahoo.com.tw',
+          })
+        )
+      }
 
-      // function openToolPack() {
-      //   const { postMessage } = window.ReactNativeWebView
-      //   if (postMessage) {
-      //     postMessage(
-      //       JSON.stringify({
-      //         action: 'openToolPack',
-      //         url: 'http://hotmail.com.tw',
-      //       })
-      //     )
-      //   }
-      // }
+      function openToolPack() {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            action: 'openToolPack',
+            url: 'http://hotmail.com.tw',
+          })
+        )
+      }
     })()
   </script>
 </html>
