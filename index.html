@@ -35,11 +35,10 @@
     />
   </body>
   <script type="text/javascript">
-
-    // window.ReactNativeWebView.onMessage(function(message){
-    //   document.getElementById('message').innerText(`Message: ${message}`);
-    // })
-
+window.document.addEventListener('message', function (e) {
+    const message = e.data
+    document.getElementById('message').innerText(`Message: ${message}`);
+})
     document.getElementById("startTask").addEventListener("click", function(){
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
