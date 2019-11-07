@@ -27,6 +27,7 @@
     <button id="openAliPay">open AliPay</button>
     <button id="openToolPack">openToolPack</button>
     <button id="openAlbum">openAlbum</button>
+    <button id="startTask">startTask</button>
     <h1 id="message">Message: none1</h1>
     <img
       id="demoImage"
@@ -34,6 +35,19 @@
     />
   </body>
   <script type="text/javascript">
+
+    window.ReactNativeWebView.onMessage(function(message){
+      document.getElementById('message').innerText(`Message: ${message}`);
+    })
+
+    document.getElementById("startTask").addEventListener("click", function(){
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          action: 'startTask',
+        })
+      )
+    });
+
     document.getElementById("goBack").addEventListener("click", function(){
       window.ReactNativeWebView.postMessage(
         JSON.stringify({
